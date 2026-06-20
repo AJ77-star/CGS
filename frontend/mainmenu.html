@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Career Guidance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline';">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body {
+            background:
+                radial-gradient(ellipse at 15% 15%, rgba(59,130,246,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 85%, rgba(59,130,246,0.06) 0%, transparent 50%),
+                #080d1a;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .e1 { animation: fadeInUp 0.6s ease both; }
+        .e2 { animation: fadeInUp 0.6s 0.1s ease both; }
+        .e3 { animation: fadeInUp 0.6s 0.2s ease both; }
+        .e4 { animation: fadeInUp 0.6s 0.3s ease both; }
+        .e5 { animation: fadeInUp 0.6s 0.4s ease both; }
+        .e6 { animation: fadeInUp 0.6s 0.5s ease both; }
+
+        .grad-text {
+            background: linear-gradient(135deg, #3b82f6, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Welcome banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(14,20,36,0.9));
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+
+        /* Action cards */
+        .action-card {
+            background: linear-gradient(145deg, rgba(18,18,30,0.98), rgba(14,20,36,0.98));
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.28s ease;
+            cursor: pointer;
+        }
+        .action-card:hover {
+            border-color: rgba(59,130,246,0.45);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(59,130,246,0.12);
+        }
+        .action-card:hover .card-icon { background: rgba(59,130,246,0.25) !important; }
+        .action-card:hover .card-arrow { color: #3b82f6; }
+
+        .card-arrow { color: rgba(255,255,255,0.2); transition: color 0.25s, transform 0.25s; }
+        .action-card:hover .card-arrow { transform: translateX(4px); }
+
+        /* Logout button */
+        .btn-logout {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.25s;
+            cursor: pointer;
+        }
+        .btn-logout:hover {
+            background: rgba(59,130,246,0.1);
+            border-color: rgba(59,130,246,0.3);
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="py-4 px-6" style="background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,130,246,0.12);">
+        <div class="max-w-2xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                    <i class="fas fa-compass text-white text-sm"></i>
+                </div>
+                <span class="font-extrabold text-white tracking-tight">CGS</span>
+            </div>
+            <span class="text-gray-500 text-sm" id="headerGreeting"></span>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center px-4 py-12">
+        <div class="w-full max-w-2xl">
+
+            <!-- Welcome Banner -->
+            <div class="e1 welcome-banner rounded-2xl px-7 py-6 mb-8 flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background:rgba(59,130,246,0.2);">
+                    <i class="fas fa-graduation-cap text-blue-400 text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm font-medium">Hello,</p>
+                    <h2 class="text-2xl font-black grad-text" id="studentWelcome">Student!</h2>
+                    <p class="text-gray-500 text-xs mt-1">What would you like to do today?</p>
+                </div>
+            </div>
+
+            <!-- Action Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+
+                <button id="startQuizBtn" class="e2 action-card rounded-2xl p-6 text-left w-full">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.12);">
+                            <i class="fas fa-brain text-blue-400 text-lg"></i>
+                        </div>
+                        <i class="fas fa-chevron-right card-arrow mt-1"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base mb-1">Take Career Quiz</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Answer 3 stages to get personalised career recommendations.</p>
+                </button>
+
+                <button id="viewResultsBtn" class="e3 action-card rounded-2xl p-6 text-left w-full">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.12);">
+                            <i class="fas fa-chart-bar text-blue-400 text-lg"></i>
+                        </div>
+                        <i class="fas fa-chevron-right card-arrow mt-1"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base mb-1">View My Results</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Review your latest career recommendations and AI guidance.</p>
+                </button>
+
+                <button id="bookSessionBtn" class="e4 action-card rounded-2xl p-6 text-left w-full">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.12);">
+                            <i class="fas fa-calendar-check text-blue-400 text-lg"></i>
+                        </div>
+                        <i class="fas fa-chevron-right card-arrow mt-1"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base mb-1">Book Counsellor</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Schedule a one-on-one session with an expert counsellor.</p>
+                </button>
+
+                <button id="profileBtn" class="e5 action-card rounded-2xl p-6 text-left w-full">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.12);">
+                            <i class="fas fa-user-circle text-blue-400 text-lg"></i>
+                        </div>
+                        <i class="fas fa-chevron-right card-arrow mt-1"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base mb-1">My Profile</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Update your name or change your account password.</p>
+                </button>
+
+            </div>
+
+            <!-- Logout -->
+            <div class="e6">
+                <button id="logoutBtn" class="btn-logout w-full py-3 rounded-xl text-gray-400 font-semibold text-sm flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sign Out
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-4 text-center text-gray-600 text-sm" style="border-top:1px solid rgba(59,130,246,0.08);">
+        <p>Bowen University &copy; 2025</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="mainmenu.js"></script>
+    <script>
+        const _s = JSON.parse(localStorage.getItem('student') || 'null');
+        if (_s && _s.fullname) {
+            document.getElementById('studentWelcome').textContent = _s.fullname + '!';
+            document.getElementById('headerGreeting').textContent = _s.email || '';
+        }
+    </script>
+</body>
+</html>

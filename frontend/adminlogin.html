@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Career Guidance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline';">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body {
+            background:
+                radial-gradient(ellipse at 10% 20%, rgba(59,130,246,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(59,130,246,0.06) 0%, transparent 50%),
+                #080d1a;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glowPulse {
+            0%,100% { box-shadow: 0 0 16px rgba(59,130,246,0.3), 0 4px 16px rgba(0,0,0,0.4); }
+            50%     { box-shadow: 0 0 32px rgba(59,130,246,0.55), 0 4px 16px rgba(0,0,0,0.4); }
+        }
+        .card {
+            animation: fadeInUp 0.65s ease both;
+            background: linear-gradient(145deg, rgba(18,18,30,0.98), rgba(14,20,36,0.98));
+            border: 1px solid rgba(59,130,246,0.2);
+            box-shadow: 0 4px 50px rgba(0,0,0,0.5), 0 0 25px rgba(59,130,246,0.05);
+        }
+        .grad-text {
+            background: linear-gradient(135deg, #3b82f6, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .inp {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: white;
+            border-radius: 12px;
+            padding: 13px 16px 13px 44px;
+            font-size: 0.9rem;
+            transition: all 0.25s;
+            font-family: 'Inter', sans-serif;
+        }
+        .inp:focus {
+            outline: none;
+            border-color: rgba(59,130,246,0.5);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+            background: rgba(59,130,246,0.04);
+        }
+        .inp::placeholder { color: rgba(255,255,255,0.22); }
+        .inp-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            animation: glowPulse 2.5s ease-in-out infinite;
+            transition: transform 0.2s, background 0.2s;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
+        .btn-primary:active { transform: translateY(0); }
+        .restricted-badge {
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(59,130,246,0.2);
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="py-4 px-6" style="background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,130,246,0.12);">
+        <a href="index.html" class="inline-flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div class="w-9 h-9 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <i class="fas fa-compass text-white text-sm"></i>
+            </div>
+            <span class="font-extrabold text-white tracking-tight">Career Guidance System</span>
+        </a>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center px-4 py-12">
+        <div class="card rounded-2xl p-10 w-full max-w-md">
+
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background:rgba(59,130,246,0.12);">
+                    <i class="fas fa-shield-alt text-blue-400 text-2xl"></i>
+                </div>
+                <h2 class="text-3xl font-black grad-text">Admin Portal</h2>
+                <p class="text-gray-500 mt-2 text-sm">System administrator access only</p>
+
+                <div class="restricted-badge inline-flex items-center gap-2 rounded-full px-3 py-1.5 mt-3">
+                    <i class="fas fa-lock text-blue-500 text-xs"></i>
+                    <span class="text-blue-400 text-xs font-semibold">Restricted Access</span>
+                </div>
+            </div>
+
+            <div class="space-y-4 mb-6">
+                <div>
+                    <label class="text-gray-400 text-sm font-semibold block mb-2">Admin Email</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope inp-icon"></i>
+                        <input type="email" id="email" placeholder="admin@example.com" class="inp">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-gray-400 text-sm font-semibold block mb-2">Password</label>
+                    <div class="relative">
+                        <i class="fas fa-key inp-icon"></i>
+                        <input type="password" id="password" placeholder="••••••••" class="inp">
+                    </div>
+                </div>
+            </div>
+
+            <button id="adminLoginBtn" class="btn-primary">
+                <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+            </button>
+
+            <p id="statusMsg" class="text-center text-sm mt-4 min-h-[20px]" style="color:#6b7280;"></p>
+
+            <div class="mt-6 pt-6 text-center" style="border-top:1px solid rgba(255,255,255,0.05);">
+                <a href="index.html" class="text-gray-600 hover:text-gray-400 text-sm transition-colors">
+                    ← Back to homepage
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-4 text-center text-gray-600 text-sm" style="border-top:1px solid rgba(59,130,246,0.08);">
+        <p>Bowen University &copy; 2025</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="adminlogin.js"></script>
+</body>
+</html>

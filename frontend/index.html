@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline';">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body {
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(59,130,246,0.13) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(59,130,246,0.08) 0%, transparent 50%),
+                #080d1a;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes floatA {
+            0%,100% { transform: translateY(0) rotate(0deg); }
+            50%     { transform: translateY(-16px) rotate(4deg); }
+        }
+        @keyframes floatB {
+            0%,100% { transform: translateY(0) rotate(0deg); }
+            50%     { transform: translateY(-12px) rotate(-4deg); }
+        }
+        @keyframes glowPulse {
+            0%,100% { box-shadow: 0 0 18px rgba(59,130,246,0.35), 0 4px 20px rgba(0,0,0,0.4); }
+            50%     { box-shadow: 0 0 38px rgba(59,130,246,0.6),  0 4px 20px rgba(0,0,0,0.4); }
+        }
+        @keyframes dotPulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+        .e1 { animation: fadeInUp 0.7s ease both; }
+        .e2 { animation: fadeInUp 0.7s 0.15s ease both; }
+        .e3 { animation: fadeInUp 0.7s 0.3s  ease both; }
+        .e4 { animation: fadeInUp 0.7s 0.45s ease both; }
+        .e5 { animation: fadeInUp 0.7s 0.6s  ease both; }
+
+        .fa { animation: floatA 6s ease-in-out infinite; }
+        .fb { animation: floatB 5s ease-in-out infinite 1s; }
+        .fc { animation: floatA 7s ease-in-out infinite 2s; }
+        .fd { animation: floatB 6.5s ease-in-out infinite 0.5s; }
+
+        .grad-text {
+            background: linear-gradient(135deg, #3b82f6, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-hero {
+            background: #3b82f6;
+            animation: glowPulse 2.5s ease-in-out infinite;
+            transition: transform 0.25s, background 0.25s;
+        }
+        .btn-hero:hover { transform: scale(1.05); background: #2563eb; }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(18,18,30,0.95), rgba(14,20,36,0.95));
+            border: 1px solid rgba(59,130,246,0.18);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            border-color: rgba(59,130,246,0.5);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(59,130,246,0.1);
+        }
+        .badge {
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(59,130,246,0.4), transparent);
+        }
+        .live-dot { animation: dotPulse 2s ease-in-out infinite; }
+    </style>
+</head>
+<body class="text-white min-h-screen flex flex-col">
+
+    <!-- Background floating decorations -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0 select-none" aria-hidden="true">
+        <span class="fa absolute top-24  left-12  text-7xl opacity-[0.07]">🎓</span>
+        <span class="fb absolute top-52  right-16 text-6xl opacity-[0.06]">🔬</span>
+        <span class="fc absolute bottom-52 left-20 text-6xl opacity-[0.06]">📚</span>
+        <span class="fd absolute bottom-64 right-12 text-7xl opacity-[0.07]">💡</span>
+        <span class="fa absolute top-1/2  left-1/3  text-5xl opacity-[0.04]">⚗️</span>
+        <span class="fb absolute top-1/3  right-1/3 text-5xl opacity-[0.04]">🏆</span>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-20 py-4 px-6" style="background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,130,246,0.12);">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                    <i class="fas fa-compass text-white text-sm"></i>
+                </div>
+                <span class="font-extrabold text-white tracking-tight">CGS</span>
+            </div>
+            <nav class="flex items-center gap-5">
+                <a href="counsellor-login.html" class="text-gray-400 hover:text-blue-400 text-sm font-medium transition-colors">Counsellor Portal</a>
+                <a href="adminlogin.html"        class="text-gray-400 hover:text-blue-400 text-sm font-medium transition-colors">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-16 text-center">
+
+        <div class="e1 badge inline-flex items-center gap-2 rounded-full px-4 py-2 mb-8">
+            <span class="live-dot w-2 h-2 bg-blue-500 rounded-full inline-block"></span>
+            <span class="text-blue-400 text-sm font-semibold">Powered by AI + Expert System</span>
+        </div>
+
+        <h1 class="e2 font-black leading-tight mb-6" style="font-size:clamp(2.4rem,6vw,5rem);">
+            Discover Your<br>
+            <span class="grad-text">Perfect Career</span><br>
+            Path
+        </h1>
+
+        <p class="e3 text-gray-400 max-w-xl mb-10 leading-relaxed" style="font-size:clamp(0.95rem,2vw,1.1rem);">
+            An intelligent system built for secondary school students. Take a smart quiz and get AI-powered career recommendations tailored to your academic strengths.
+        </p>
+
+        <button id="startBtn" class="e4 btn-hero text-white font-bold px-14 py-4 rounded-full text-lg tracking-wide">
+            Get Started &nbsp;→
+        </button>
+
+        <div class="e5 divider w-full max-w-3xl my-16"></div>
+
+        <!-- Feature Cards -->
+        <div class="e5 grid grid-cols-1 md:grid-cols-3 gap-5 max-w-3xl w-full text-left">
+            <div class="feature-card rounded-2xl p-6">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style="background:rgba(59,130,246,0.12);">
+                    <i class="fas fa-brain text-blue-400 text-lg"></i>
+                </div>
+                <h3 class="font-bold text-white mb-2">Smart 3-Step Quiz</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Pick subjects, answer career interest questions, and complete an aptitude test.</p>
+            </div>
+            <div class="feature-card rounded-2xl p-6">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style="background:rgba(59,130,246,0.12);">
+                    <i class="fas fa-robot text-blue-400 text-lg"></i>
+                </div>
+                <h3 class="font-bold text-white mb-2">AI Recommendations</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Our CLIPS expert system and Groq AI analyse your profile for personalised guidance.</p>
+            </div>
+            <div class="feature-card rounded-2xl p-6">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style="background:rgba(59,130,246,0.12);">
+                    <i class="fas fa-user-tie text-blue-400 text-lg"></i>
+                </div>
+                <h3 class="font-bold text-white mb-2">Expert Counsellors</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Book a one-on-one session with a trained counsellor to discuss your future.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="relative z-10 py-5 text-center text-gray-600 text-sm" style="border-top:1px solid rgba(59,130,246,0.08);">
+        <p>Bowen University &copy; 2025 — Career Guidance System</p>
+    </footer>
+
+    <script src="home.js"></script>
+</body>
+</html>

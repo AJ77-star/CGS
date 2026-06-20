@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Career Guidance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline';">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body {
+            background:
+                radial-gradient(ellipse at 10% 20%, rgba(59,130,246,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(59,130,246,0.06) 0%, transparent 50%),
+                #080d1a;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glowPulse {
+            0%,100% { box-shadow: 0 0 16px rgba(59,130,246,0.3); }
+            50%     { box-shadow: 0 0 32px rgba(59,130,246,0.55); }
+        }
+        .card {
+            animation: fadeInUp 0.65s ease both;
+            background: linear-gradient(145deg, rgba(18,18,30,0.98), rgba(14,20,36,0.98));
+            border: 1px solid rgba(59,130,246,0.18);
+            box-shadow: 0 4px 50px rgba(0,0,0,0.5);
+        }
+        .grad-text {
+            background: linear-gradient(135deg, #3b82f6, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .inp {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: white;
+            border-radius: 12px;
+            padding: 13px 16px 13px 44px;
+            font-size: 0.9rem;
+            transition: all 0.25s;
+            font-family: 'Inter', sans-serif;
+        }
+        .inp:focus {
+            outline: none;
+            border-color: rgba(59,130,246,0.5);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+            background: rgba(59,130,246,0.04);
+        }
+        .inp::placeholder { color: rgba(255,255,255,0.22); }
+        .inp-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            animation: glowPulse 2.5s ease-in-out infinite;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
+
+        .avatar {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+            box-shadow: 0 0 20px rgba(59,130,246,0.4);
+            margin: 0 auto 12px;
+            text-transform: uppercase;
+        }
+        .email-badge {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="py-4 px-6" style="background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,130,246,0.12);">
+        <div class="max-w-2xl mx-auto flex items-center justify-between">
+            <a href="mainmenu.html" class="inline-flex items-center gap-2 text-gray-400 hover:text-white text-sm font-semibold transition-colors">
+                <i class="fas fa-arrow-left text-blue-400"></i> Back
+            </a>
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-compass text-white text-xs"></i>
+                </div>
+                <span class="font-bold text-sm text-white">My Profile</span>
+            </div>
+            <div style="width:52px;"></div>
+        </div>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center px-4 py-12">
+        <div class="card rounded-2xl p-10 w-full max-w-md">
+
+            <!-- Avatar section -->
+            <div class="text-center mb-8">
+                <div class="avatar" id="avatarInitial">?</div>
+                <h2 class="text-2xl font-black grad-text">My Profile</h2>
+                <p class="text-gray-500 text-sm mt-1">Update your account details</p>
+            </div>
+
+            <!-- Email display -->
+            <div class="mb-6">
+                <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Email Address</p>
+                <div class="email-badge">
+                    <i class="fas fa-envelope text-gray-600 text-sm"></i>
+                    <p id="emailDisplay" class="text-gray-300 text-sm font-medium">—</p>
+                </div>
+            </div>
+
+            <!-- Edit form -->
+            <form id="profileForm" class="space-y-4">
+                <div>
+                    <label class="text-gray-400 text-sm font-semibold block mb-2" for="fullname">Full Name</label>
+                    <div class="relative">
+                        <i class="fas fa-user inp-icon"></i>
+                        <input id="fullname" type="text" placeholder="Your full name" class="inp">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-gray-400 text-sm font-semibold block mb-2" for="newPassword">New Password <span class="text-gray-600 font-normal">(optional)</span></label>
+                    <div class="relative">
+                        <i class="fas fa-lock inp-icon"></i>
+                        <input id="newPassword" type="password" placeholder="At least 6 characters" class="inp">
+                    </div>
+                </div>
+                <button id="saveBtn" type="submit" class="btn-primary mt-2">
+                    <i class="fas fa-save mr-2"></i>Save Changes
+                </button>
+                <p id="statusMsg" class="text-sm text-center min-h-[18px]" style="color:#6b7280;"></p>
+            </form>
+
+        </div>
+    </main>
+
+    <footer class="py-4 text-center text-gray-600 text-sm" style="border-top:1px solid rgba(59,130,246,0.08);">
+        <p>Bowen University &copy; 2025</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="profile.js"></script>
+    <script>
+        const _ps = JSON.parse(localStorage.getItem('student') || 'null');
+        if (_ps && _ps.fullname) {
+            const initial = _ps.fullname.charAt(0).toUpperCase();
+            document.getElementById('avatarInitial').textContent = initial;
+        }
+    </script>
+</body>
+</html>

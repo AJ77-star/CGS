@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Quiz - Career Guidance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-gray-800 border-b-4 border-red-500 py-8 text-center relative">
+        <a href="main-menu.html"
+            class="absolute left-6 top-1/2 -translate-y-1/2 bg-gray-700 hover:bg-red-500 text-white text-sm font-bold py-2 px-4 rounded-full transition duration-300">
+            ← Back
+        </a>
+        <h1 class="text-4xl font-bold text-red-500 tracking-widest">Career Guidance System</h1>
+        <p class="text-gray-400 mt-2 tracking-wide">Discover your career path</p>
+    </header>
+
+    <!-- Main -->
+    <main class="flex flex-1 justify-center items-center px-4 py-16">
+
+        <!-- Stage 1: Pick 3 Subjects -->
+        <div id="stage1" class="bg-gray-800 border border-red-500 rounded-2xl shadow-2xl p-12 max-w-lg w-full text-center">
+            <h2 class="text-3xl font-bold text-red-500 mb-4">Step 1 of 3</h2>
+            <p class="text-gray-400 mb-8 leading-relaxed">Select your <span class="text-red-500 font-bold">3 favorite subjects</span></p>
+
+            <div class="grid grid-cols-2 gap-4 mb-8" id="subjectGrid">
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Mathematics">Mathematics</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="English">English</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Biology">Biology</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Chemistry">Chemistry</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Physics">Physics</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Economics">Economics</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Geography">Geography</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Literature">Literature</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Government">Government</button>
+                <button class="subject-btn bg-gray-700 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300" data-subject="Commerce">Commerce</button>
+            </div>
+
+            <p id="subjectCount" class="text-gray-400 mb-4">0 of 3 selected</p>
+
+            <button id="stage1Btn"
+                class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-10 rounded-full text-lg tracking-wide transition duration-500 ease-in-out hover:opacity-80 hover:scale-105 w-full">
+                Next →
+            </button>
+        </div>
+
+        <!-- Stage 2: Career Interest Quiz (hidden initially) -->
+        <div id="stage2" class="hidden bg-gray-800 border border-red-500 rounded-2xl shadow-2xl p-12 max-w-lg w-full text-center">
+            <h2 class="text-3xl font-bold text-red-500 mb-4">Step 2 of 3</h2>
+            <p class="text-gray-400 mb-8 leading-relaxed">Answer the <span class="text-red-500 font-bold">Career Interest</span> questions</p>
+
+            <div class="text-left mb-8">
+                <p class="text-white mb-4 font-bold">1. What type of work environment do you prefer?</p>
+                <div class="flex flex-col gap-2">
+                    <label class="text-gray-400"><input type="radio" name="q1" value="outdoor" class="mr-2"> Outdoor/Fieldwork</label>
+                    <label class="text-gray-400"><input type="radio" name="q1" value="office" class="mr-2"> Office/Indoor</label>
+                    <label class="text-gray-400"><input type="radio" name="q1" value="creative" class="mr-2"> Creative Studio</label>
+                    <label class="text-gray-400"><input type="radio" name="q1" value="social" class="mr-2"> Social/People Oriented</label>
+                </div>
+
+                <p class="text-white mt-6 mb-4 font-bold">2. What activity do you enjoy most?</p>
+                <div class="flex flex-col gap-2">
+                    <label class="text-gray-400"><input type="radio" name="q2" value="solving" class="mr-2"> Solving Problems</label>
+                    <label class="text-gray-400"><input type="radio" name="q2" value="helping" class="mr-2"> Helping People</label>
+                    <label class="text-gray-400"><input type="radio" name="q2" value="creating" class="mr-2"> Creating Things</label>
+                    <label class="text-gray-400"><input type="radio" name="q2" value="leading" class="mr-2"> Leading/Managing</label>
+                </div>
+
+                <p class="text-white mt-6 mb-4 font-bold">3. What is your strongest skill?</p>
+                <div class="flex flex-col gap-2">
+                    <label class="text-gray-400"><input type="radio" name="q3" value="analytical" class="mr-2"> Analytical Thinking</label>
+                    <label class="text-gray-400"><input type="radio" name="q3" value="communication" class="mr-2"> Communication</label>
+                    <label class="text-gray-400"><input type="radio" name="q3" value="technical" class="mr-2"> Technical Skills</label>
+                    <label class="text-gray-400"><input type="radio" name="q3" value="artistic" class="mr-2"> Artistic/Creative</label>
+                </div>
+            </div>
+
+            <button id="stage2Btn"
+                class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-10 rounded-full text-lg tracking-wide transition duration-500 ease-in-out hover:opacity-80 hover:scale-105 w-full">
+                Next →
+            </button>
+        </div>
+
+        <!-- Stage 3: IQ Quiz (hidden initially) -->
+        <div id="stage3" class="hidden bg-gray-800 border border-red-500 rounded-2xl shadow-2xl p-12 max-w-lg w-full text-center">
+            <h2 class="text-3xl font-bold text-red-500 mb-4">Step 3 of 3</h2>
+            <p class="text-gray-400 mb-8 leading-relaxed">Answer the <span class="text-red-500 font-bold">IQ</span> questions</p>
+
+            <div class="text-left mb-8">
+                <p class="text-white mb-4 font-bold">1. If a train travels 60km in 1 hour, how far will it travel in 3 hours?</p>
+                <div class="flex flex-col gap-2">
+                    <label class="text-gray-400"><input type="radio" name="iq1" value="a" class="mr-2"> 120km</label>
+                    <label class="text-gray-400"><input type="radio" name="iq1" value="b" class="mr-2"> 180km</label>
+                    <label class="text-gray-400"><input type="radio" name="iq1" value="c" class="mr-2"> 200km</label>
+                    <label class="text-gray-400"><input type="radio" name="iq1" value="d" class="mr-2"> 240km</label>
+                </div>
+
+                <p class="text-white mt-6 mb-4 font-bold">2. Which number comes next: 2, 4, 8, 16, ?</p>
+                <div class="flex flex-col gap-2">
+                    <label class="text-gray-400"><input type="radio" name="iq2" value="a" class="mr-2"> 24</label>
+                    <label class="text-gray-400"><input type="radio" name="iq2" value="b" class="mr-2"> 28</label>
+                    <label class="text-gray-400"><input type="radio" name="iq2" value="c" class="mr-2"> 32</label>
+                    <label class="text-gray-400"><input type="radio" name="iq2" value="d" class="mr-2"> 36</label>
+                </div>
+
+                <p class="text-white mt-6 mb-4 font-bold">3. What is the odd one out: Apple, Mango, Carrot, Orange?</p>
+                <div class="flex flex-col gap-2">
+                    <label class="text-gray-400"><input type="radio" name="iq3" value="a" class="mr-2"> Apple</label>
+                    <label class="text-gray-400"><input type="radio" name="iq3" value="b" class="mr-2"> Mango</label>
+                    <label class="text-gray-400"><input type="radio" name="iq3" value="c" class="mr-2"> Carrot</label>
+                    <label class="text-gray-400"><input type="radio" name="iq3" value="d" class="mr-2"> Orange</label>
+                </div>
+            </div>
+
+            <button id="stage3Btn"
+                class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-10 rounded-full text-lg tracking-wide transition duration-500 ease-in-out hover:opacity-80 hover:scale-105 w-full">
+                Get My Results →
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t-4 border-red-500 py-4 text-center text-gray-400 tracking-wide">
+        <p>Bowen University &copy; 2025</p>
+    </footer>
+
+    <script src="quiz.js"></script>
+</body>
+</html>

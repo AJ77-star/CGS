@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Quiz - Career Guidance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline';">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body {
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(59,130,246,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(59,130,246,0.06) 0%, transparent 50%),
+                #080d1a;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glowPulse {
+            0%,100% { box-shadow: 0 0 16px rgba(59,130,246,0.3); }
+            50%     { box-shadow: 0 0 30px rgba(59,130,246,0.55); }
+        }
+        .stage-card {
+            animation: fadeInUp 0.6s ease both;
+            background: linear-gradient(145deg, rgba(18,18,30,0.98), rgba(14,20,36,0.98));
+            border: 1px solid rgba(59,130,246,0.2);
+            box-shadow: 0 4px 50px rgba(0,0,0,0.5);
+        }
+        .grad-text {
+            background: linear-gradient(135deg, #3b82f6, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Progress steps */
+        .step-dot {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 700;
+            transition: all 0.3s;
+        }
+        .step-dot.active {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 0 12px rgba(59,130,246,0.5);
+        }
+        .step-dot.done {
+            background: rgba(59,130,246,0.25);
+            color: #3b82f6;
+            border: 1px solid rgba(59,130,246,0.4);
+        }
+        .step-dot.inactive {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .step-line {
+            flex: 1; height: 2px; max-width: 60px;
+            background: rgba(255,255,255,0.08);
+        }
+        .step-line.done { background: rgba(59,130,246,0.4); }
+
+        /* Subject buttons — quiz.js toggles bg-gray-700 ↔ bg-blue-500, we override visually */
+        .subject-btn {
+            font-size: 0.8rem !important;
+            border-radius: 10px !important;
+            border: 1px solid transparent !important;
+            transition: all 0.2s ease !important;
+            font-weight: 600 !important;
+            text-align: center !important;
+        }
+        .subject-btn.bg-gray-700 {
+            background: rgba(30,32,50,0.9) !important;
+            color: #9ca3af !important;
+            border-color: rgba(255,255,255,0.07) !important;
+        }
+        .subject-btn.bg-gray-700:hover {
+            background: rgba(59,130,246,0.12) !important;
+            border-color: rgba(59,130,246,0.35) !important;
+            color: white !important;
+        }
+        .subject-btn.bg-blue-500 {
+            background: rgba(59,130,246,0.18) !important;
+            color: #3b82f6 !important;
+            border-color: rgba(59,130,246,0.6) !important;
+            box-shadow: 0 0 12px rgba(59,130,246,0.25) !important;
+        }
+
+        /* Category label */
+        .category-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 10px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .category-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        /* Subject count badge */
+        #subjectCount {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.25);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #93c5fd;
+        }
+
+        /* Next button */
+        .btn-next {
+            background: #3b82f6;
+            animation: glowPulse 2.5s ease-in-out infinite;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-next:hover { background: #2563eb; transform: translateY(-2px); }
+
+        /* Dynamically generated radio question styling */
+        #careerQuestions .text-left,
+        #iqQuestions .text-left {
+            margin-bottom: 20px !important;
+        }
+        #careerQuestions p.font-bold,
+        #iqQuestions p.font-bold {
+            color: white !important;
+            font-size: 0.95rem !important;
+            margin-bottom: 10px !important;
+        }
+        #careerQuestions label,
+        #iqQuestions label {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            padding: 11px 14px !important;
+            background: rgba(255,255,255,0.03) !important;
+            border: 1px solid rgba(255,255,255,0.07) !important;
+            border-radius: 10px !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+            color: #9ca3af !important;
+            font-size: 0.875rem !important;
+            margin-bottom: 6px !important;
+        }
+        #careerQuestions label:hover,
+        #iqQuestions label:hover {
+            background: rgba(59,130,246,0.08) !important;
+            border-color: rgba(59,130,246,0.3) !important;
+            color: white !important;
+        }
+        #careerQuestions input[type="radio"],
+        #iqQuestions input[type="radio"] {
+            accent-color: #3b82f6 !important;
+            width: 15px !important;
+            height: 15px !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Modal */
+        #modal { backdrop-filter: blur(8px); }
+        .modal-card {
+            background: linear-gradient(145deg, rgba(18,18,30,0.99), rgba(14,20,36,0.99));
+            border: 1px solid rgba(59,130,246,0.3);
+            box-shadow: 0 4px 60px rgba(0,0,0,0.7), 0 0 30px rgba(59,130,246,0.08);
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="py-4 px-6" style="background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,130,246,0.12);">
+        <div class="max-w-2xl mx-auto flex items-center justify-between">
+            <a href="mainmenu.html" class="inline-flex items-center gap-2 text-gray-400 hover:text-white text-sm font-semibold transition-colors">
+                <i class="fas fa-arrow-left text-blue-400"></i> Back
+            </a>
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-compass text-white text-xs"></i>
+                </div>
+                <span class="font-bold text-sm text-white">Career Quiz</span>
+            </div>
+            <div style="width:52px;"></div>
+        </div>
+    </header>
+
+    <main class="flex-1 flex justify-center items-start px-4 py-10">
+
+        <!-- ====== STAGE 1 ====== -->
+        <div id="stage1" class="stage-card rounded-2xl p-8 w-full max-w-xl">
+
+            <!-- Progress -->
+            <div class="flex items-center justify-center gap-2 mb-6">
+                <div class="step-dot active">1</div>
+                <div class="step-line"></div>
+                <div class="step-dot inactive">2</div>
+                <div class="step-line"></div>
+                <div class="step-dot inactive">3</div>
+            </div>
+
+            <h2 class="text-2xl font-black grad-text text-center mb-1">Step 1 of 3</h2>
+            <p class="text-gray-400 text-center text-sm mb-6">Select your <span class="text-blue-400 font-bold">3 favourite subjects</span></p>
+
+            <div class="mb-6">
+
+                <p class="category-label">🌍 General</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="English Language" data-track="general">English Language</button>
+                </div>
+
+                <p class="category-label">🔬 Science Track</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Mathematics"        data-track="science">Mathematics</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Biology"            data-track="science">Biology</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Chemistry"          data-track="science">Chemistry</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Physics"            data-track="science">Physics</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Further Mathematics" data-track="science">Further Maths</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Agriculture"        data-track="science">Agriculture</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Technical Drawing"  data-track="science">Technical Drawing</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Food and Nutrition" data-track="science">Food & Nutrition</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Digital Technologies" data-track="science">Digital Tech</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Physical Education" data-track="science">Physical Edu.</button>
+                </div>
+
+                <p class="category-label">💼 Commercial Track</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Economics"   data-track="commercial">Economics</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Commerce"    data-track="commercial">Commerce</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Accounting"  data-track="commercial">Accounting</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Marketing"   data-track="commercial">Marketing</button>
+                </div>
+
+                <p class="category-label">🎨 Arts Track</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Literature"  data-track="arts">Literature</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Government"  data-track="arts">Government</button>
+                    <button class="subject-btn bg-gray-700 py-3 px-3" data-subject="Geography"   data-track="arts">Geography</button>
+                </div>
+            </div>
+
+            <div class="flex justify-center mb-5">
+                <span id="subjectCount">0 of 3 selected</span>
+            </div>
+
+            <button id="stage1Btn" class="btn-next">
+                Continue &nbsp;<i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- ====== STAGE 2 ====== -->
+        <div id="stage2" class="hidden stage-card rounded-2xl p-8 w-full max-w-xl">
+
+            <!-- Progress -->
+            <div class="flex items-center justify-center gap-2 mb-6">
+                <div class="step-dot done"><i class="fas fa-check text-xs"></i></div>
+                <div class="step-line done"></div>
+                <div class="step-dot active">2</div>
+                <div class="step-line"></div>
+                <div class="step-dot inactive">3</div>
+            </div>
+
+            <h2 class="text-2xl font-black grad-text text-center mb-1">Step 2 of 3</h2>
+            <p class="text-gray-400 text-center text-sm mb-6">Answer the <span class="text-blue-400 font-bold">Career Interest</span> questions</p>
+
+            <div id="careerQuestions" class="mb-6"></div>
+
+            <button id="stage2Btn" class="btn-next">
+                Continue &nbsp;<i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- ====== STAGE 3 ====== -->
+        <div id="stage3" class="hidden stage-card rounded-2xl p-8 w-full max-w-xl">
+
+            <!-- Progress -->
+            <div class="flex items-center justify-center gap-2 mb-6">
+                <div class="step-dot done"><i class="fas fa-check text-xs"></i></div>
+                <div class="step-line done"></div>
+                <div class="step-dot done"><i class="fas fa-check text-xs"></i></div>
+                <div class="step-line done"></div>
+                <div class="step-dot active">3</div>
+            </div>
+
+            <h2 class="text-2xl font-black grad-text text-center mb-1">Step 3 of 3</h2>
+            <p class="text-gray-400 text-center text-sm mb-6">Answer the <span class="text-blue-400 font-bold">Aptitude</span> questions</p>
+
+            <div id="iqQuestions" class="mb-6"></div>
+
+            <button id="stage3Btn" class="btn-next" style="background:#16a34a; animation:none;">
+                Get My Results &nbsp;<i class="fas fa-trophy"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <footer class="py-4 text-center text-gray-600 text-sm" style="border-top:1px solid rgba(59,130,246,0.08);">
+        <p>Bowen University &copy; 2025</p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50 hidden">
+        <div class="modal-card rounded-2xl p-8 max-w-sm w-full text-center mx-4">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background:rgba(59,130,246,0.15);">
+                <i class="fas fa-exclamation-triangle text-blue-400 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-blue-400 mb-2">Hold on!</h3>
+            <p id="modalMessage" class="text-gray-400 text-sm mb-6 leading-relaxed">Please select subjects from the same track only!</p>
+            <button id="modalCloseBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-10 rounded-full transition-all text-sm">
+                Got it
+            </button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="quiz.js"></script>
+</body>
+</html>

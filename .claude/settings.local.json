@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\HP LAPTOP\\\\OneDrive\\\\Desktop\\\\CGS\" -Name \"package.json\" -Recurse | Select-Object @{n='Path';e={$_.Directory.FullName}} -Unique)"
+    ]
+  }
+}
