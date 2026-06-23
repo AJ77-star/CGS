@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, async () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-    console.log(`GROQ_API_KEY loaded: ${process.env.GROQ_API_KEY ? 'YES' : 'NO - check your .env file'}`);
+    console.log(`GROQ_API_KEY loaded: ${process.env.GROQ_API_KEY ? 'YES' : 'NO'}`);
+    console.log(`DATABASE_URL loaded: ${process.env.DATABASE_URL ? 'YES' : 'NO - using local config'}`);
     await initDb();
 });
