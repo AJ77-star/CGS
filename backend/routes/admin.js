@@ -6,6 +6,51 @@ const { adminRequired } = require('../middleware/auth');
 
 const router = express.Router();
 
+router.get('/seed', async (req, res) => {
+    try {
+        const bcryptLib = require('bcrypt');
+        const results = [];
+
+        // Seed admin
+        const existingAdmin = await pool.query('SELECT id FROM admins WHERE email = $1', ['admin@careerguide.com']);
+        if (existingAdmin.rows.length > 0) {
+            results.push('Admin already exists.');
+        } else {
+            const hashed = await bcryptLib.hash('admin321', 10);
+            await pool.query(
+                'INSERT INTO admins (fullname, email, password) VALUES ($1, $2, $3)',
+                ['System Administrator', 'admin@careerguide.com', hashed]
+            );
+            results.push('Admin created: admin@careerguide.com / admin321');
+        }
+
+        // Seed counsellors
+        const counsellors = [
+            { fullname: 'Emeka Adeyemi', email: 'emeka.adeyemi@counsellor.com', password: 'Counsellor@123' },
+            { fullname: 'Ngozi Okafor', email: 'ngozi.okafor@counsellor.com', password: 'Counsellor@123' },
+            { fullname: 'Taiwo Adeleke', email: 'taiwo.adeleke@counsellor.com', password: 'Counsellor@123' }
+        ];
+
+        for (const c of counsellors) {
+            const exists = await pool.query('SELECT id FROM counsellors WHERE email = $1', [c.email]);
+            if (exists.rows.length > 0) {
+                results.push(`Counsellor already exists: ${c.email}`);
+            } else {
+                const hashed = await bcryptLib.hash(c.password, 10);
+                await pool.query(
+                    'INSERT INTO counsellors (fullname, email, password) VALUES ($1, $2, $3)',
+                    [c.fullname, c.email, hashed]
+                );
+                results.push(`Counsellor created: ${c.fullname} | ${c.email} / ${c.password}`);
+            }
+        }
+
+        res.json({ results });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 router.post('/login', async (req, res) => {
     const { email, password } = req.body || {};
 
