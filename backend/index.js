@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
+const initDb = require('./initDb');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -32,7 +33,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`Server is running on http://localhost:${PORT}`);
     console.log(`GROQ_API_KEY loaded: ${process.env.GROQ_API_KEY ? 'YES' : 'NO - check your .env file'}`);
+    await initDb();
 });
